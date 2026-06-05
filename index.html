@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vectoria: Directed Conquest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="scanline-overlay"></div>
+
+<header id="top-bar">
+    <button id="menu-toggle" title="Menü umschalten">☰</button>
+    <div class="top-stat" title="Political Power">
+        <span class="icon">📜</span>
+        <span id="pp-val">100</span>
+    </div>
+    <div class="top-stat" title="Stability">
+        <span class="icon">⚖️</span>
+        <span id="stability-val">50%</span>
+    </div>
+    <div class="top-stat" title="War Support">
+        <span class="icon">⚔️</span>
+        <span id="war-support-val">20%</span>
+    </div>
+    <div class="top-stat" title="Manpower">
+        <span class="icon">👥</span>
+        <span id="manpower-val">5.0k</span>
+    </div>
+    <div class="top-stat" title="Civilian Factories">
+        <span class="icon">🏗️</span>
+        <span id="civ-factories-val">5</span>
+    </div>
+    <div class="top-stat" title="Military Factories">
+        <span class="icon">🏭</span>
+        <span id="mil-factories-val">2</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="top-stat tension" title="World Tension">
+        <span id="tension-val">0%</span>
+        <span class="icon">🔥</span>
+    </div>
+    <div class="top-stat date">
+        <span id="game-date">1. Jan 1936</span>
+    </div>
+</header>
+
+<aside id="sidebar">
+    <div id="logo-section">
+        <p id="eyebrow">Grand Strategy Simulator</p>
+        <h1 id="title">Vectoria</h1>
+    </div>
+
+    <section id="hud" class="compact-hud">
+        <div class="stat-mini">
+            <span>Provinzen</span>
+            <strong id="tiles">0</strong>
+        </div>
+        <div class="stat-mini">
+            <span>Gegner</span>
+            <strong id="bot-tiles">0</strong>
+        </div>
+    </section>
+
+    <div class="tab-container">
+        <div class="tab-header">
+            <button class="tab-btn active" data-tab="diplomacy">Diplomatie</button>
+            <button class="tab-btn" data-tab="production">Produktion</button>
+        </div>
+
+        <div id="tab-diplomacy" class="tab-content active">
+            <section id="diplo-panel">
+                <button id="btn-alliance">Buendnis schließen</button>
+                <button id="btn-tribute">Tribut fordern</button>
+                <button id="btn-pact">Nichtangriffspakt</button>
+            </section>
+            <section id="scenario-panel">
+                <select id="scenario">
+                    <option value="standard">Standard 1936</option>
+                    <option value="corner">Isolierte Front</option>
+                    <option value="threeBots">Großer Konflikt</option>
+                    <option value="islands">Inselkrieg</option>
+                </select>
+                <select id="map-mode">
+                    <option value="continents">Gelaende</option>
+                    <option value="islands">Inseln</option>
+                    <option value="mountains">Gebirge</option>
+                </select>
+            </section>
+        </div>
+
+        <div id="tab-production" class="tab-content">
+            <section id="build-panel">
+                <button class="build" data-building="barracks">Zivilfabrik</button>
+                <button class="build" data-building="factory">Mil-Fabrik</button>
+                <button class="build" data-building="fort">Befestigung</button>
+                <button id="btn-upgrade">Ausbauen</button>
+            </section>
+            <section id="unit-panel">
+                <button class="unit active" data-unit="infantry">Infanterie</button>
+                <button class="unit" data-unit="tank">Panzer</button>
+                <button class="unit" data-unit="artillery">Artillerie</button>
+            </section>
+        </div>
+    </div>
+
+    <section id="tile-panel">
+        <strong id="tile-info">Waehle eine Provinz...</strong>
+    </section>
+
+    <section id="controls">
+        <button class="dir" data-dir="up">↑</button>
+        <button class="dir" data-dir="left">←</button>
+        <button class="dir" data-dir="right">→</button>
+        <button class="dir" data-dir="down">↓</button>
+    </section>
+
+    <div id="buttons-row">
+        <button id="btn-pause">Pause</button>
+        <button id="btn-reset">Neu starten</button>
+        <button id="btn-replay">Verlauf</button>
+    </div>
+
+    <canvas id="minimap" width="120" height="72"></canvas>
+    <div id="log"></div>
+</aside>
+
+<main id="game-container">
+    <canvas id="game" width="960" height="576"></canvas>
+</main>
+
+<script src="game.js"></script>
+</body>
+</html>
