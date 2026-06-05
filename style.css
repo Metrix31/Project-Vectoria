@@ -1,0 +1,320 @@
+:root {
+    --bg-dark: #1a1a1a;
+    --bg-panel: #2d2d2d;
+    --bg-header: #3c3c3c;
+    --border: #4a4a4a;
+    --text: #e0e0e0;
+    --muted: #a0a0a0;
+    --accent: #c5b358; /* Gold/Khaki */
+    --player: #4682b4; /* Steel Blue */
+    --bot: #b22222; /* Firebrick */
+    --gold: #ffd700;
+    --success: #556b2f; /* Dark Olive */
+    --font-main: 'Inter', sans-serif;
+    --font-header: 'Orbitron', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: #000;
+    color: var(--text);
+    font-family: var(--font-main);
+    display: grid;
+    grid-template-areas: 
+        "top top"
+        "side main";
+    grid-template-rows: 40px 1fr;
+    grid-template-columns: 320px 1fr;
+    overflow: hidden;
+}
+
+#scanline-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.05) 0px,
+        rgba(0, 0, 0, 0.05) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 2000;
+}
+
+/* Top Bar */
+#top-bar {
+    grid-area: top;
+    height: 40px;
+    background: var(--bg-header);
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 15px;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+#menu-toggle {
+    display: none;
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 2px 8px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: var(--font-header);
+    line-height: 1;
+}
+
+.top-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    background: rgba(0,0,0,0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+}
+
+.top-stat .icon { font-size: 16px; }
+.spacer { flex: 1; }
+
+.tension { color: #ff4500; font-family: var(--font-header); font-size: 14px; }
+.date { background: var(--accent); color: #000; }
+
+#sidebar {
+    grid-area: side;
+    width: 320px;
+    background: var(--bg-panel);
+    border-right: 2px solid var(--border);
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+#logo-section {
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 8px;
+}
+
+#eyebrow { font-size: 9px; text-transform: uppercase; color: var(--accent); margin: 0; }
+#title { font-size: 24px; font-family: var(--font-header); margin: 0; color: #fff; }
+
+.compact-hud {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+
+.stat-mini {
+    background: rgba(0,0,0,0.3);
+    padding: 5px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-align: center;
+}
+
+.stat-mini span { font-size: 9px; text-transform: uppercase; color: var(--muted); display: block; }
+.stat-mini strong { font-size: 16px; color: var(--accent); }
+
+/* Tabs */
+.tab-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.tab-header {
+    display: flex;
+    gap: 2px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: var(--bg-header);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    padding: 6px;
+    font-size: 11px;
+    cursor: pointer;
+    color: var(--muted);
+}
+
+.tab-btn.active {
+    background: var(--bg-panel);
+    color: var(--accent);
+    border-top: 2px solid var(--accent);
+}
+
+.tab-content {
+    display: none;
+    padding: 10px;
+    border: 1px solid var(--border);
+    background: rgba(0,0,0,0.2);
+    flex: 1;
+    overflow-y: auto;
+}
+
+.tab-content.active { display: block; }
+
+/* Panels */
+section {
+    margin-bottom: 10px;
+}
+
+#diplo-panel, #build-panel, #unit-panel {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+}
+
+#scenario-panel select {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border: 1px solid var(--border);
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#tile-panel {
+    background: rgba(197, 179, 88, 0.1);
+    border-left: 3px solid var(--accent);
+    padding: 8px;
+    font-size: 11px;
+}
+
+#controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+button {
+    background: var(--bg-header);
+    color: #fff;
+    border: 1px solid var(--border);
+    padding: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+button:hover { background: #4a4a4a; border-color: var(--accent); }
+button.active { background: var(--accent); color: #000; }
+
+.dir { font-size: 18px; }
+
+#buttons-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+}
+
+#minimap {
+    width: 100%;
+    aspect-ratio: 5/3;
+    background: #000;
+    border: 1px solid var(--border);
+}
+
+#log {
+    height: 100px;
+    background: #000;
+    color: #00ff00;
+    font-family: monospace;
+    font-size: 10px;
+    padding: 5px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+}
+
+/* Main Area */
+#game-container {
+    grid-area: main;
+    background: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#game {
+    background: #000;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    border: 2px solid var(--border);
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 1200px) {
+    #menu-toggle {
+        display: block;
+    }
+
+    body {
+        grid-template-areas: 
+            "top"
+            "main";
+        grid-template-rows: 40px 1fr;
+        grid-template-columns: 100%;
+        overflow: hidden;
+    }
+
+    #sidebar {
+        position: fixed;
+        top: 40px;
+        left: -320px;
+        bottom: 0;
+        width: 320px;
+        height: calc(100vh - 40px);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 5px 0 25px rgba(0,0,0,0.8);
+        border-right: 2px solid var(--accent);
+        border-top: none;
+        background: var(--bg-panel);
+        z-index: 1000;
+    }
+
+    #sidebar.open {
+        left: 0;
+    }
+
+    .tab-container {
+        flex: none;
+    }
+
+    .tab-content {
+        flex: none;
+        overflow-y: visible;
+        min-height: 200px;
+    }
+
+    #game-container {
+        padding: 10px;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+}
